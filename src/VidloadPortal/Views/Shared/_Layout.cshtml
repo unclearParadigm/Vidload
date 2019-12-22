@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vidload</title>
+
+  <link rel="stylesheet" href="~/css/site.css"/>
+  <link rel="stylesheet" href="~/lib/semantic-ui/semantic.min.css"/>
+</head>
+<body>
+<div id="particles-background-canvas"></div>
+<div class="ui container root-container">
+  <div class="ui segment">
+    <div class="ui menu header">
+      <a class="item" asp-controller="Home" asp-action="Index">Vidload</a>
+      <div class="right menu">
+      </div>
+    </div>
+  </div>
+
+  <div class="ui container ">
+    @RenderBody()
+  </div>
+
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/particlesjs/particles.js"></script>
+<script async>particlesJS.load('particles-background-canvas', "/lib/particlesjs/particleconfig.json");</script>
+<script src="~/js/site.js"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿@using System.Collections.Specialized
+<div class="ui segment">
+  <div class="ui container">
+    <div class="ui massive icon input" style="width: 100%;">
+      <input id="pastebox" type="text" placeholder="Paste your Video URL here">
+      <i class="cloud download icon"></i>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script>
+  var pastebox = $('#pastebox');
+  pastebox.keypress(function(e) {
+     if(e.keyCode === 13) {
+         submitLink();
+     }
+  });
+  
+  function submitLink() {
+      var downloadLink = pastebox.val();
+      $.ajax({
+        type: "POST",
+        url: "/api/download/",
+        data: {"downloadLink": downloadLink}
+      })
+      .done(function(data) {
+         alert(data); 
+      });
+  }
+</script>
+}
