@@ -1,14 +1,18 @@
 using System;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using VidloadShared.Structures;
 
 namespace VidloadPortal.Models {
   public class DownloadRequest {
+    [JsonProperty(PropertyName = "downloadLink")]
     public string DownloadLink { get; set; }
+    [JsonProperty(PropertyName = "outputFormat")]
     public string OutputFormat { get; set; }
 
     public bool IsValid() {
-      var validUrlChars = new[] {'/', ':', '.'};
+      var validUrlChars = new[] {'/', ':', '.', '=', '?'};
 
       var validityCriteria = new[] {
         DownloadLink != null,

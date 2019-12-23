@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using StackExchange.Redis;
 using VidloadCache;
 using VidloadPortal.Services;
@@ -28,6 +29,7 @@ namespace VidloadPortal {
       services.AddSingleton<IVidloadCache, RedisVidloadCache>();
       services
         .AddMvc()
+        .AddJsonOptions(j => j.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
     }
 

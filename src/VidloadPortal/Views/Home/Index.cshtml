@@ -1,5 +1,7 @@
 ﻿@section Styles {
   <link rel="stylesheet" href="~/node_modules/semantic-ui-transition/transition.min.css"/>
+  <link rel="stylesheet" href="~/node_modules/semantic-ui-css/components/modal.min.css"/>
+  <link rel="stylesheet" href="~/node_modules/semantic-ui-css/components/dimmer.min.css"/>
 }
 
 <div class="ui segment">
@@ -19,7 +21,22 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
 
+<div class="ui basic modal js-invalid-parameters-modal">
+  <div class="ui icon header">
+    <i class="meh outline icon"></i>
+    Uh-oh, pasted the wrong thing?
+  </div>
+  <div class="content">
+    <p>Please make sure the Link/URL you paste is valid!</p>
+  </div>
+  <div class="actions">
+    <div class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      Let's try it again
+    </div>
   </div>
 </div>
 
@@ -28,13 +45,16 @@
   <!-- Semantic UI dependencies -->
   <script src="~/node_modules/semantic-ui-transition/transition.min.js"></script>
   <script src="~/node_modules/semantic-ui-css/components/dropdown.min.js"></script>
-
+    <script src="~/node_modules/semantic-ui-css/components/dimmer.min.js"></script>
+  <script src="~/node_modules/semantic-ui-css/components/modal.min.js"></script>
+  
   <!-- Vidload Frontend JavaScript -->
   <script src="~/js/configuration/apiServiceUrls.js"></script>
   <script src="~/js/requests/downloadRequest.js"></script>
   <script src="~/js/requests/mediaLocationRequest.js"></script>
   <script src="~/js/requests/mediaMetadataRequest.js"></script>
   <script src="~/js/controller/vidloadController.js"></script>
+  <script src="~/js/downloadJob.js"></script>
   <script src="~/js/backendApiService.js"></script>
 
   <script>
@@ -48,8 +68,14 @@
     
     const videoUrlTextbox = $('.js-video-url');
     const formatDropdown = $('.js-format-dropdown');
+    const invalidParametersModal = $('.js-invalid-parameters-modal');
     
-    const controller = new VidloadController(backendApiService, videoUrlTextbox, formatDropdown);
+    const controller = new VidloadController(
+        backendApiService, 
+        videoUrlTextbox, 
+        formatDropdown, 
+        invalidParametersModal);
+    
     controller.initialize();
   });
   </script>

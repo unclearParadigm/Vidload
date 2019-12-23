@@ -25,7 +25,7 @@ namespace VidloadPortal.Controllers {
     }
 
     [HttpPost]
-    public async Task<IActionResult> InitiateDownload(DownloadRequest downloadRequest) {
+    public async Task<IActionResult> InitiateDownload([FromBody]DownloadRequest downloadRequest) {
       if (!downloadRequest.IsValid())
         return Json(ResponseModel<object>.CreateFailure("The request is invalid and does not meet the API-Requirements"));
 
