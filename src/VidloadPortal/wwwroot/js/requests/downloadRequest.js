@@ -1,6 +1,6 @@
 class DownloadRequest {
   constructor(downloadLink, outputFormat) {
-    this.downloadLink = downlodLink;
+    this.downloadLink = downloadLink;
     this.outputFormat = outputFormat;
   }
 }

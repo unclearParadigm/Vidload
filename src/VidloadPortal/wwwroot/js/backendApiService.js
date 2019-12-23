@@ -7,12 +7,11 @@ class BackendApiService {
     $.ajax({
       type: "GET",
       url: this.apiServiceUrls.getMediaMetadataUrl,
-      data: JSON.stringify(mediaMetaDataRequest)
-    }).done(function (data) {
-      const response = JSON.parse(data);
-      response['IsSuccess'] === true && response['HasData'] === true
-        ? responseWithDataCallback(response)
-        : responseWithoutDataCallback(response);
+      data: {"downloadLink": mediaMetaDataRequest.downloadLink}
+    }).done(function (response) {
+      response['isSuccess'] === true && response['hasValue'] === true
+        ? responseWithDataCallback(response['data'])
+        : responseWithoutDataCallback();
     });
   }
 
@@ -20,12 +19,14 @@ class BackendApiService {
     $.ajax({
       type: "GET",
       url: this.apiServiceUrls.getMediaLocationUrl,
-      data: JSON.stringify(mediaLocationRequest)
-    }).done(function (data) {
-      const response = JSON.parse(data);
-      response['IsSuccess'] === true && response['HasData'] === true
+      data: {
+        "downloadLink": mediaLocationRequest.downloadLink,
+        "outputFormat": mediaLocationRequest.outputFormat
+      }
+    }).done(function (response) {
+      response['isSuccess'] === true && response['hasValue'] === true
         ? responseWithDataCallback(response)
-        : responseWithoutDataCallback(response);
+        : responseWithoutDataCallback();
     });
   }
 
@@ -33,7 +34,9 @@ class BackendApiService {
     $.ajax({
       type: "POST",
       url: this.apiServiceUrls.initiateDownloadUrl,
-      data: JSON.stringify(downloadRequest)
+      data: JSON.stringify(downloadRequest),
+      dataType: "json",
+      contentType: "application/json; charset=utf-8"
     }).done(function () {
       completedCallback();
     });
