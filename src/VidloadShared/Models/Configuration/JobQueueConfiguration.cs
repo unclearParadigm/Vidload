@@ -1,7 +1,7 @@
 namespace VidloadShared.Models.Configuration {
   public class JobQueueConfiguration {
-    public string VideoDownloadJobQueueName { get; set; }
-    public string VideoInformationJobQueueName { get; set; }
+    public string MediaDownloadJobQueueName { get; set; }
+    public string MediaMetadataJobQueueName { get; set; }
 
     public string JobQueueHostname { get; set; }
     public string JobQueueUsername { get; set; }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using VidloadCache;
+using VidloadPortal.Services;
 using VidloadShared.Models.Configuration;
 
 namespace VidloadPortal {
@@ -16,9 +17,13 @@ namespace VidloadPortal {
     }
 
     public void ConfigureServices(IServiceCollection services) {
+      var eq = new JobEnqueuer(_vidloadConfiguration);
       var cm = ConnectionMultiplexer.Connect(_vidloadConfiguration.CacheConfiguration.RedisConnectionString);
+      eq.Open();
+      
       services.AddSingleton(_vidloadConfiguration);
       services.AddSingleton(_vidloadConfiguration.CacheConfiguration);
+      services.AddSingleton<IJobEnqueuer>(eq);
       services.AddSingleton<IConnectionMultiplexer>(cm);
       services.AddSingleton<IVidloadCache, RedisVidloadCache>();
       services

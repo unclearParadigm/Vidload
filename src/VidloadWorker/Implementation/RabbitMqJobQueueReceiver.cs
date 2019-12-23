@@ -50,14 +50,14 @@ namespace VidloadWorker.Implementation {
       _rabbitMqChannel = _rabbitMqConnection.CreateModel();
 
       _rabbitMqChannel.QueueDeclare(
-        queue: _vidloadConfiguration.JobQueueConfiguration.VideoDownloadJobQueueName,
+        queue: _vidloadConfiguration.JobQueueConfiguration.MediaDownloadJobQueueName,
         durable: false,
         exclusive: false,
         autoDelete: false,
         arguments: null);
 
       _rabbitMqChannel.QueueDeclare(
-        queue: _vidloadConfiguration.JobQueueConfiguration.VideoInformationJobQueueName,
+        queue: _vidloadConfiguration.JobQueueConfiguration.MediaMetadataJobQueueName,
         durable: false,
         exclusive: false,
         autoDelete: false,
@@ -67,12 +67,12 @@ namespace VidloadWorker.Implementation {
       VideoInformationJobConsumer = new EventingBasicConsumer(_rabbitMqChannel);
 
       _rabbitMqChannel.BasicConsume(
-        queue: _vidloadConfiguration.JobQueueConfiguration.VideoDownloadJobQueueName,
+        queue: _vidloadConfiguration.JobQueueConfiguration.MediaDownloadJobQueueName,
         autoAck: true,
         consumer: VideoDownloadJobConsumer);
 
       _rabbitMqChannel.BasicConsume(
-        queue: _vidloadConfiguration.JobQueueConfiguration.VideoInformationJobQueueName,
+        queue: _vidloadConfiguration.JobQueueConfiguration.MediaMetadataJobQueueName,
         autoAck: true,
         consumer: VideoInformationJobConsumer);
 
