@@ -1,6 +1,10 @@
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using VidloadCache;
 using VidloadPortal.Models;
 using VidloadPortal.Services;
@@ -12,10 +16,12 @@ namespace VidloadPortal.Controllers {
   public class APIController : Controller {
     private readonly IJobEnqueuer _jobEnqueuer;
     private readonly IVidloadCache _vidloadCache;
+    private readonly IHostingEnvironment _hostingEnvironment;
 
-    public APIController(IJobEnqueuer jobEnqueuer, IVidloadCache vidloadCache) {
+    public APIController(IJobEnqueuer jobEnqueuer, IVidloadCache vidloadCache, IHostingEnvironment hostingEnvironment) {
       _jobEnqueuer = jobEnqueuer;
       _vidloadCache = vidloadCache;
+      _hostingEnvironment = hostingEnvironment;
     }
 
     [HttpPost]
@@ -60,7 +66,7 @@ namespace VidloadPortal.Controllers {
     }
 
     [HttpGet]
-    public async Task<IActionResult> MediaLocation(string downloadLink) {
+    public async Task<IActionResult> MediaLocation(string downloadLink, string outputFormat) {
       if (string.IsNullOrWhiteSpace(downloadLink) || !Uri.TryCreate(downloadLink, UriKind.Absolute, out _))
         return Json(ResponseModel<MediaMetadata>.CreateFailure("Invalid Media URL"));
 
@@ -70,6 +76,15 @@ namespace VidloadPortal.Controllers {
       }
 
       return Json(ResponseModel<MediaMetadata>.CreateSuccess(null));
+    }
+
+    [ResponseCache(Duration = 60 * 60, Location = ResponseCacheLocation.Any, NoStore = true)]
+    public IActionResult GetParticleConfiguration() {
+      var relPath = Path.Join("wwwroot", "assets", "particlesConfiguration.json");
+      var absPath = Path.Join(_hostingEnvironment.ContentRootPath, relPath);
+      var fileContent = System.IO.File.ReadAllText(absPath, Encoding.UTF8);
+      var deserialized = JsonConvert.DeserializeObject(fileContent);
+      return Json(deserialized);
     }
   }
 }
