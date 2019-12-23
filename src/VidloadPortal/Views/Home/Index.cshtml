@@ -1,32 +1,56 @@
-﻿@using System.Collections.Specialized
+﻿@section Styles {
+  <link rel="stylesheet" href="~/node_modules/semantic-ui-transition/transition.min.css"/>
+}
+
 <div class="ui segment">
   <div class="ui container">
-    <div class="ui massive icon input" style="width: 100%;">
-      <input id="pastebox" type="text" placeholder="Paste your Video URL here">
+    <div class="ui big icon input" style="width: 100%;">
+      <input class="js-video-url" type="text" placeholder="Paste your Video URL here">
       <i class="cloud download icon"></i>
+      <div class="ui massive floating dropdown labeled search icon button js-format-dropdown">
+        <i class="world icon"></i>
+        <span class="text">Format</span>
+        <div class="menu">
+          <div class="item">MP3</div>
+          <div class="item">WAV</div>
+          <div class="item">MP4</div>
+          <div class="item">WEBM</div>
+          <div class="item">Vorbis</div>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
-@section Scripts {
+@section Scripts
+{
+  <!-- Semantic UI dependencies -->
+  <script src="~/node_modules/semantic-ui-transition/transition.min.js"></script>
+  <script src="~/node_modules/semantic-ui-css/components/dropdown.min.js"></script>
+
+  <!-- Vidload Frontend JavaScript -->
+  <script src="~/js/configuration/apiServiceUrls.js"></script>
+  <script src="~/js/requests/downloadRequest.js"></script>
+  <script src="~/js/requests/mediaLocationRequest.js"></script>
+  <script src="~/js/requests/mediaMetadataRequest.js"></script>
+  <script src="~/js/controller/vidloadController.js"></script>
+  <script src="~/js/backendApiService.js"></script>
+
   <script>
-  var pastebox = $('#pastebox');
-  pastebox.keypress(function(e) {
-     if(e.keyCode === 13) {
-         submitLink();
-     }
+  $(document).ready(function() {
+    const apiServiceUrls = new ApiServiceUrls(
+        '@Url.Action("InitiateDownload", "API")',
+        '@Url.Action("MediaMetadata", "API")',
+        '@Url.Action("MediaLocation", "API")');
+    
+    const backendApiService = new BackendApiService(apiServiceUrls);
+    
+    const videoUrlTextbox = $('.js-video-url');
+    const formatDropdown = $('.js-format-dropdown');
+    
+    const controller = new VidloadController(backendApiService, videoUrlTextbox, formatDropdown);
+    controller.initialize();
   });
-  
-  function submitLink() {
-      var downloadLink = pastebox.val();
-      $.ajax({
-        type: "POST",
-        url: "/api/download/",
-        data: {"downloadLink": downloadLink}
-      })
-      .done(function(data) {
-         alert(data); 
-      });
-  }
-</script>
+  </script>
 }

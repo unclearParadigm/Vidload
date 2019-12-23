@@ -6,7 +6,9 @@
   <title>Vidload</title>
 
   <link rel="stylesheet" href="~/css/site.css"/>
-  <link rel="stylesheet" href="~/lib/semantic-ui/semantic.min.css"/>
+  <link rel="stylesheet" href="~/node_modules/semantic-ui-css/semantic.min.css"/>
+  @RenderSection("Styles", false);
+
 </head>
 <body>
 <div id="particles-background-canvas"></div>
@@ -25,11 +27,9 @@
 
 </div>
 
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/particlesjs/particles.js"></script>
-<script async>particlesJS.load('particles-background-canvas', "/lib/particlesjs/particleconfig.json");</script>
-<script src="~/js/site.js"></script>
+<script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="~/node_modules/particles.js/particles.js"></script>
+<script async>particlesJS.load('particles-background-canvas', '@Url.Action("GetParticleConfiguration", "API")');</script>
 @RenderSection("Scripts", required: false)
 </body>
 </html>
