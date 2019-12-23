@@ -25,6 +25,7 @@ namespace VidloadWorker {
 
       var diContainer = new ServiceCollection()
         .AddSingleton(configuration)
+        .AddSingleton(configuration.CacheConfiguration)
         .AddSingleton<IVideoLoader, YtdlWrapper>()
         .AddSingleton<IVidloadCache, RedisVidloadCache>()
         .AddSingleton<IJobQueueReceiver, RabbitMqJobQueueReceiver>()

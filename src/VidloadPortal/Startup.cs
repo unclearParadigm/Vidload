@@ -20,7 +20,7 @@ namespace VidloadPortal {
       var eq = new JobEnqueuer(_vidloadConfiguration);
       var cm = ConnectionMultiplexer.Connect(_vidloadConfiguration.CacheConfiguration.RedisConnectionString);
       eq.Open();
-      
+
       services.AddSingleton(_vidloadConfiguration);
       services.AddSingleton(_vidloadConfiguration.CacheConfiguration);
       services.AddSingleton<IJobEnqueuer>(eq);
