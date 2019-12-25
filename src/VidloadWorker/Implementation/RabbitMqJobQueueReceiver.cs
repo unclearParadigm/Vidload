@@ -15,8 +15,8 @@ namespace VidloadWorker.Implementation {
     private IConnection _rabbitMqConnection;
     private readonly VidloadConfiguration _vidloadConfiguration;
 
-    private EventingBasicConsumer VideoDownloadJobConsumer;
-    private EventingBasicConsumer VideoInformationJobConsumer;
+    private EventingBasicConsumer MediaDownloadJobConsumer;
+    private EventingBasicConsumer MediaMetadataJobConsumer;
 
     private Func<MediaDownloadJob, Task> mediaDownloadHandler;
     private Func<MediaMetadataJob, Task> mediaMetadataHandler;
@@ -63,25 +63,25 @@ namespace VidloadWorker.Implementation {
         autoDelete: false,
         arguments: null);
 
-      VideoDownloadJobConsumer = new EventingBasicConsumer(_rabbitMqChannel);
-      VideoInformationJobConsumer = new EventingBasicConsumer(_rabbitMqChannel);
+      MediaDownloadJobConsumer = new EventingBasicConsumer(_rabbitMqChannel);
+      MediaMetadataJobConsumer = new EventingBasicConsumer(_rabbitMqChannel);
 
       _rabbitMqChannel.BasicConsume(
         queue: _vidloadConfiguration.JobQueueConfiguration.MediaDownloadJobQueueName,
         autoAck: true,
-        consumer: VideoDownloadJobConsumer);
+        consumer: MediaDownloadJobConsumer);
 
       _rabbitMqChannel.BasicConsume(
         queue: _vidloadConfiguration.JobQueueConfiguration.MediaMetadataJobQueueName,
         autoAck: true,
-        consumer: VideoInformationJobConsumer);
+        consumer: MediaMetadataJobConsumer);
 
-      VideoDownloadJobConsumer.Received += (model, ea) => {
+      MediaDownloadJobConsumer.Received += (model, ea) => {
         DeserializeJobQueueMessage<MediaDownloadJob>(ea.Body)
           .OnSuccessTry(m => mediaDownloadHandler(m));
       };
 
-      VideoInformationJobConsumer.Received += (model, ea) => {
+      MediaMetadataJobConsumer.Received += (model, ea) => {
         DeserializeJobQueueMessage<MediaMetadataJob>(ea.Body)
           .Tap(m => mediaMetadataHandler(m));
       };

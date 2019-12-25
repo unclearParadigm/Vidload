@@ -70,6 +70,9 @@ namespace VidloadWorker.Implementation.Loader {
         .Bind(DeserializeFromJson)
         .Bind(ToVideoInfo);
 
+      if (videoInformation.IsSuccess) 
+        videoInformation.Value.VideoSource = request.DownloadLink;
+      
       return Task.FromResult(videoInformation);
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,7 @@ namespace VidloadPortal.Controllers {
     }
 
     [HttpPost]
-    public async Task<IActionResult> InitiateDownload([FromBody]DownloadRequest downloadRequest) {
+    public async Task<IActionResult> InitiateDownload([FromBody] DownloadRequest downloadRequest) {
       if (!downloadRequest.IsValid())
         return Json(ResponseModel<object>.CreateFailure("The request is invalid and does not meet the API-Requirements"));
 
@@ -44,8 +45,9 @@ namespace VidloadPortal.Controllers {
       }
 
       var existingFileLocation = await _vidloadCache.GetMediaLocation(downloadLink);
-      if (existingFileLocation.IsSuccess && existingFileLocation.Value.HasValue) {
-        await _jobEnqueuer.Enqueue(new MediaDownloadJob {DownloadLink = downloadLink, TraceId = traceId, UserId = userId});
+      if (existingFileLocation.IsSuccess && existingFileLocation.Value.HasNoValue) {
+        var targetFormat = (OutputFormat)Enum.Parse(typeof(OutputFormat), downloadRequest.OutputFormat, true);
+        await _jobEnqueuer.Enqueue(new MediaDownloadJob {DownloadLink = downloadLink, TraceId = traceId, UserId = userId, TargetFormat = targetFormat});
       }
 
       await _vidloadCache.SetJobStatus(traceId, JobStatus.Enqueued);
@@ -68,14 +70,24 @@ namespace VidloadPortal.Controllers {
     [HttpGet]
     public async Task<IActionResult> MediaLocation(string downloadLink, string outputFormat) {
       if (string.IsNullOrWhiteSpace(downloadLink) || !Uri.TryCreate(downloadLink, UriKind.Absolute, out _))
-        return Json(ResponseModel<MediaMetadata>.CreateFailure("Invalid Media URL"));
+        return Json(ResponseModel<MediaLocation>.CreateFailure("Invalid Media URL"));
 
       var existingMetadataForDownloadLink = await _vidloadCache.GetMetadata(downloadLink);
       if (existingMetadataForDownloadLink.IsSuccess && existingMetadataForDownloadLink.Value.HasValue) {
-        return Json(ResponseModel<MediaMetadata>.CreateSuccess(existingMetadataForDownloadLink.Value.Value));
+        var mediaLocation = await _vidloadCache.GetMediaLocation(downloadLink);
+        if (mediaLocation.IsSuccess && mediaLocation.Value.HasValue)
+          return Json(ResponseModel<MediaLocation>.CreateSuccess(mediaLocation.Value.Value));
       }
 
-      return Json(ResponseModel<MediaMetadata>.CreateSuccess(null));
+      return Json(ResponseModel<MediaLocation>.CreateSuccess(null));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Download(string downloadLink) {
+      var existingFileLocation = await _vidloadCache.GetMediaLocation(downloadLink);
+      var filePath = existingFileLocation.Value.Value.FilePath;
+      var fileContent = System.IO.File.ReadAllBytes(filePath);
+      return File(fileContent, "application/force-download", downloadLink);
     }
 
     [ResponseCache(Duration = 60 * 60, Location = ResponseCacheLocation.Any, NoStore = true)]

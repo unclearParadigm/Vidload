@@ -12,8 +12,7 @@ namespace VidloadWorker.Implementation {
     private readonly IVideoLoader _videoLoader;
     private readonly IVidloadCache _vidloadCache;
     private readonly IJobQueueReceiver _jobQueueReceiver;
-
-
+    
     public VidloadWorkerService(
       IVideoLoader videoLoader,
       IVidloadCache vidloadCache,

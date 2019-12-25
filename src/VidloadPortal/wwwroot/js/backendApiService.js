@@ -3,7 +3,7 @@ class BackendApiService {
     this.apiServiceUrls = apiServiceUrls;
   }
 
-  GetMediaMetaData(mediaMetaDataRequest, responseWithDataCallback, responseWithoutDataCallback) {
+  getMediaMetaData(mediaMetaDataRequest, responseWithDataCallback, responseWithoutDataCallback) {
     $.ajax({
       type: "GET",
       url: this.apiServiceUrls.getMediaMetadataUrl,
@@ -15,7 +15,7 @@ class BackendApiService {
     });
   }
 
-  GetMediaLocation(mediaLocationRequest, responseWithDataCallback, responseWithoutDataCallback) {
+  getMediaLocation(mediaLocationRequest, responseWithDataCallback, responseWithoutDataCallback) {
     $.ajax({
       type: "GET",
       url: this.apiServiceUrls.getMediaLocationUrl,
@@ -25,12 +25,12 @@ class BackendApiService {
       }
     }).done(function (response) {
       response['isSuccess'] === true && response['hasValue'] === true
-        ? responseWithDataCallback(response)
+        ? responseWithDataCallback(response['data'])
         : responseWithoutDataCallback();
     });
   }
 
-  InitiateDownloadRequest(downloadRequest, completedCallback) {
+  initiateDownloadRequest(downloadRequest, completedCallback) {
     $.ajax({
       type: "POST",
       url: this.apiServiceUrls.initiateDownloadUrl,

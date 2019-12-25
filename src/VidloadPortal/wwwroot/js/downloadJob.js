@@ -1,19 +1,23 @@
 class DownloadJob {
-  constructor(downloadRequest, backendApiService) {
+  constructor(downloadRequest, backendApiService, mediaMetadataCallback, mediaLocationCallback, completedCallback) {
     this.downloadRequest = downloadRequest;
     this.backendApiService = backendApiService;
+
+    this.mediaMetadataCallback = mediaMetadataCallback;
+    this.mediaLocationCallback = mediaLocationCallback;
+    this.completedCallback = completedCallback;
     this.mediaMetadata = null;
     this.mediaLocation = null;
   }
 
-  begin() {
-    this.backendApiService.InitiateDownloadRequest(this.downloadRequest,  () => this.pollMediaMetadata());
+  beginDownload() {
+    this.backendApiService.initiateDownloadRequest(this.downloadRequest,  () => this.pollMediaMetadata());
   }
 
   pollMediaMetadata() {
     const self = this;
     if (this.mediaMetadata === null) {
-      self.backendApiService.GetMediaMetaData(
+      self.backendApiService.getMediaMetaData(
         this.downloadRequest,
         function (mediaMetadata) {
           self.setMediaMetadata(mediaMetadata);
@@ -26,15 +30,15 @@ class DownloadJob {
   }
 
   setMediaMetadata(mediaMetadata) {
-    console.log("METADATA RECEIVED");
     this.mediaMetadata = mediaMetadata;
+    this.mediaMetadataCallback(mediaMetadata);
   }
 
   pollMediaLocation() {
     const self = this;
 
     if (this.mediaLocation === null) {
-      self.backendApiService.GetMediaLocation(
+      self.backendApiService.getMediaLocation(
         this.downloadRequest,
         function (mediaLocation) {
           self.setMediaLocation(mediaLocation);
@@ -46,11 +50,11 @@ class DownloadJob {
     }
   }
 
-  setMediaLocation() {
-    console.log("MEDIALOCATION RECEIVED");
+  setMediaLocation(mediaLocation) {
+    this.mediaLocationCallback(mediaLocation);
   }
 
   completeJob() {
-    console.log("DOWNLOAD COMPLETED");
+    this.completedCallback();
   }
 }

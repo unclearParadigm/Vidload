@@ -12,7 +12,7 @@ namespace VidloadPortal.Models {
     public string OutputFormat { get; set; }
 
     public bool IsValid() {
-      var validUrlChars = new[] {'/', ':', '.', '=', '?'};
+      var validUrlChars = new[] {'/', ':', '.', '=', '?', '-', '_', '+', '#', '&', '[', ']'};
 
       var validityCriteria = new[] {
         DownloadLink != null,
