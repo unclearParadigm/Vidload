@@ -1,12 +1,48 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidloadWorker", "src\VidloadWorker\VidloadWorker.csproj", "{0EED4E8D-D8D4-4A75-837E-2D1BAFDF1F3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Frontend.Portal", "src\Vidload.Frontend.Portal\Vidload.Frontend.Portal.csproj", "{5EAACA42-DBB9-4551-BD52-BCD134ECDAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidloadPortal", "src\VidloadPortal\VidloadPortal.csproj", "{5EAACA42-DBB9-4551-BD52-BCD134ECDAC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.Domain", "src\Vidload.Library.Domain\Vidload.Library.Domain.csproj", "{676FCCC4-CCF8-4E88-896D-15DFB3CB7EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidloadShared", "src\VidloadShared\VidloadShared.csproj", "{676FCCC4-CCF8-4E88-896D-15DFB3CB7EB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.Caching", "src\Vidload.Library.Caching\Vidload.Library.Caching.csproj", "{FCA80A0D-94BA-4E62-9FB6-22E46B05B791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidloadCache", "src\VidloadCache\VidloadCache.csproj", "{FCA80A0D-94BA-4E62-9FB6-22E46B05B791}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8538F221-76E9-4FF0-B3A8-A56DD17F5A19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{63F6E133-D611-4F76-B1CB-7ADB1E307962}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Worker.DownloadService", "src\Vidload.Worker.DownloadService\Vidload.Worker.DownloadService.csproj", "{473A0613-9DFD-44B3-85C3-50975EA0806F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Worker.MetadataCollector", "src\Vidload.Worker.MetadataCollector\Vidload.Worker.MetadataCollector.csproj", "{ED2BD1F6-B7D3-473D-9FCE-956813956175}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.JobQueue", "src\Vidload.Library.JobQueue\Vidload.Library.JobQueue.csproj", "{2AF4B2C7-CC67-4DCF-949F-BD6B7A341998}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{59C476C2-337B-4691-94CB-D12A5786158A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.Caching.Test", "test\Vidload.Library.Caching.Test\Vidload.Library.Caching.Test.csproj", "{9F545258-A5D4-4044-AD6D-56C1E1F9A5B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.Serialization", "src\Vidload.Library.Serialization\Vidload.Library.Serialization.csproj", "{E6B358F0-3434-45B9-9479-263426D14CEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Worker", "Worker", "{22DD66A1-7BC1-42E0-90AD-04EEE02AE732}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.Platform", "src\Vidload.Library.Platform\Vidload.Library.Platform.csproj", "{48D9E9A0-CA2B-480E-9AA8-0232B4B8A134}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{6F2772A6-2A8A-4584-BDF0-DC1379A0E7B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.JobQueueFixture", "test\Vidload.Library.JobQueueFixture\Vidload.Library.JobQueueFixture.csproj", "{240605EA-61A8-45BB-A30C-8E133475D512}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidload.Library.DockerAbstraction", "test\Vidload.Library.DockerAbstraction\Vidload.Library.DockerAbstraction.csproj", "{6CA1263F-0C4A-41B8-A103-2048B754A622}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{6DDB9CA6-9B41-47B3-B9CE-54E4D2854F15}"
+ProjectSection(SolutionItems) = preProject
+	docker\Vidload.Worker.DownloadService.Dockerfile = docker\Vidload.Worker.DownloadService.Dockerfile
+	docker\Vidload.Worker.MetadataCollector.Dockerfile = docker\Vidload.Worker.MetadataCollector.Dockerfile
+	docker\docker-compose.yml = docker\docker-compose.yml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B451D60C-2E85-4E7A-80B8-C1D9FF9E4A32}"
+ProjectSection(SolutionItems) = preProject
+	scripts\dockerbuild_services.sh = scripts\dockerbuild_services.sh
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,10 +50,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0EED4E8D-D8D4-4A75-837E-2D1BAFDF1F3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EED4E8D-D8D4-4A75-837E-2D1BAFDF1F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EED4E8D-D8D4-4A75-837E-2D1BAFDF1F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EED4E8D-D8D4-4A75-837E-2D1BAFDF1F3E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5EAACA42-DBB9-4551-BD52-BCD134ECDAC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EAACA42-DBB9-4551-BD52-BCD134ECDAC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAACA42-DBB9-4551-BD52-BCD134ECDAC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +62,53 @@ Global
 		{FCA80A0D-94BA-4E62-9FB6-22E46B05B791}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCA80A0D-94BA-4E62-9FB6-22E46B05B791}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCA80A0D-94BA-4E62-9FB6-22E46B05B791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473A0613-9DFD-44B3-85C3-50975EA0806F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473A0613-9DFD-44B3-85C3-50975EA0806F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473A0613-9DFD-44B3-85C3-50975EA0806F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473A0613-9DFD-44B3-85C3-50975EA0806F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED2BD1F6-B7D3-473D-9FCE-956813956175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED2BD1F6-B7D3-473D-9FCE-956813956175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED2BD1F6-B7D3-473D-9FCE-956813956175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED2BD1F6-B7D3-473D-9FCE-956813956175}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF4B2C7-CC67-4DCF-949F-BD6B7A341998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF4B2C7-CC67-4DCF-949F-BD6B7A341998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF4B2C7-CC67-4DCF-949F-BD6B7A341998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF4B2C7-CC67-4DCF-949F-BD6B7A341998}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F545258-A5D4-4044-AD6D-56C1E1F9A5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F545258-A5D4-4044-AD6D-56C1E1F9A5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F545258-A5D4-4044-AD6D-56C1E1F9A5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F545258-A5D4-4044-AD6D-56C1E1F9A5B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B358F0-3434-45B9-9479-263426D14CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B358F0-3434-45B9-9479-263426D14CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B358F0-3434-45B9-9479-263426D14CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B358F0-3434-45B9-9479-263426D14CEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D9E9A0-CA2B-480E-9AA8-0232B4B8A134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D9E9A0-CA2B-480E-9AA8-0232B4B8A134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D9E9A0-CA2B-480E-9AA8-0232B4B8A134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D9E9A0-CA2B-480E-9AA8-0232B4B8A134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{240605EA-61A8-45BB-A30C-8E133475D512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240605EA-61A8-45BB-A30C-8E133475D512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240605EA-61A8-45BB-A30C-8E133475D512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240605EA-61A8-45BB-A30C-8E133475D512}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CA1263F-0C4A-41B8-A103-2048B754A622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CA1263F-0C4A-41B8-A103-2048B754A622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CA1263F-0C4A-41B8-A103-2048B754A622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CA1263F-0C4A-41B8-A103-2048B754A622}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63F6E133-D611-4F76-B1CB-7ADB1E307962} = {8538F221-76E9-4FF0-B3A8-A56DD17F5A19}
+		{FCA80A0D-94BA-4E62-9FB6-22E46B05B791} = {63F6E133-D611-4F76-B1CB-7ADB1E307962}
+		{676FCCC4-CCF8-4E88-896D-15DFB3CB7EB1} = {63F6E133-D611-4F76-B1CB-7ADB1E307962}
+		{2AF4B2C7-CC67-4DCF-949F-BD6B7A341998} = {63F6E133-D611-4F76-B1CB-7ADB1E307962}
+		{9F545258-A5D4-4044-AD6D-56C1E1F9A5B3} = {59C476C2-337B-4691-94CB-D12A5786158A}
+		{E6B358F0-3434-45B9-9479-263426D14CEF} = {63F6E133-D611-4F76-B1CB-7ADB1E307962}
+		{22DD66A1-7BC1-42E0-90AD-04EEE02AE732} = {8538F221-76E9-4FF0-B3A8-A56DD17F5A19}
+		{473A0613-9DFD-44B3-85C3-50975EA0806F} = {22DD66A1-7BC1-42E0-90AD-04EEE02AE732}
+		{ED2BD1F6-B7D3-473D-9FCE-956813956175} = {22DD66A1-7BC1-42E0-90AD-04EEE02AE732}
+		{48D9E9A0-CA2B-480E-9AA8-0232B4B8A134} = {63F6E133-D611-4F76-B1CB-7ADB1E307962}
+		{6F2772A6-2A8A-4584-BDF0-DC1379A0E7B4} = {59C476C2-337B-4691-94CB-D12A5786158A}
+		{240605EA-61A8-45BB-A30C-8E133475D512} = {6F2772A6-2A8A-4584-BDF0-DC1379A0E7B4}
+		{6CA1263F-0C4A-41B8-A103-2048B754A622} = {6F2772A6-2A8A-4584-BDF0-DC1379A0E7B4}
+		{5EAACA42-DBB9-4551-BD52-BCD134ECDAC5} = {8538F221-76E9-4FF0-B3A8-A56DD17F5A19}
 	EndGlobalSection
 EndGlobal

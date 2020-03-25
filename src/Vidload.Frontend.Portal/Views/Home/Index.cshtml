@@ -1,0 +1,144 @@
+﻿@section Styles {
+  <!-- Semantic-UI Stylesheets -->
+  <link rel="stylesheet" href="/node_modules/semantic-ui-css/components/modal.min.css"/>
+  <link rel="stylesheet" href="/node_modules/semantic-ui-transition/transition.min.css"/>
+  <link rel="stylesheet" href="/node_modules/semantic-ui-css/components/dimmer.min.css"/>
+  <link rel="stylesheet" href="/node_modules/semantic-ui-css/components/dropdown.min.css"/>
+
+  <!-- Page-Component Scripts -->
+  <link rel="stylesheet" href="~/css/spinner.css"/>
+  <link rel="stylesheet" href="/node_modules/plyr/dist/plyr.css"/>
+}
+
+<div class="ui segment container">
+  <div>
+    <div class="ui three steps">
+      <div class="step">
+        <i class="truck icon"></i>
+        <div class="content">
+          <div class="title">Media URL</div>
+        </div>
+      </div>
+      <div class="active step">
+        <i class="payment icon"></i>
+        <div class="content">
+          <div class="title">Output Format</div>
+        </div>
+      </div>
+      <div class="disabled step">
+        <i class="info icon"></i>
+        <div class="content">
+          <div class="title">Download</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="ui icon input js-media-input-url-container">
+    <input class="ui input js-media-input-url" type="text" placeholder="Paste your Video URL here">
+    <i class="cloud download icon"></i>
+  </div>
+
+  <div class="ui floating dropdown labeled search icon button js-target-format-selection">
+    <div class="menu">
+      <div class="item">MP3</div>
+      <div class="item">WAV</div>
+      <div class="item">MP4</div>
+      <div class="item">WEBM</div>
+      <div class="item">Vorbis</div>
+    </div>
+  </div>
+</div>
+
+<div class="ui segment js-media-metadata-container">
+  <div class="ui grid">
+    <div class="four wide column">
+      <a href="#" class="ui medium rounded image js-video-source">
+        <img class="js-media-thumbnail" src="https://i.ytimg.com/vi/HoBa2SyvtpE/maxresdefault.jpg" alt="Thumbnail">
+      </a>
+    </div>
+    <div class="twelve wide column">
+      <h1 class="ui header js-media-title">A Super Cool Title written in the YouTubeLink</h1>
+      <h6 class="ui header js-media-description">First header</h6>
+      <div class="js-media-tags">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="js-media-playback-container">
+    <audio controls></audio>
+    <video controls></video>
+  </div>
+</div>
+
+<!-- Invalid Parameters Modal -->
+<div class="ui basic modal js-invalid-input-parameters-modal">
+  <div class="ui icon header">
+    <i class="meh outline icon"></i>
+    Uh-oh, pasted the wrong thing?
+  </div>
+  <div class="content">
+    <p>Please make sure the Link/URL you paste is valid!</p>
+  </div>
+  <div class="actions">
+    <div class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      Let's try it again
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <!-- Semantic-UI JavaScript -->
+  <script src="~/node_modules/semantic-ui-transition/transition.min.js"></script>
+  <script src="~/node_modules/semantic-ui-css/components/dropdown.min.js"></script>
+  <script src="~/node_modules/semantic-ui-css/components/dimmer.min.js"></script>
+  <script src="~/node_modules/semantic-ui-css/components/modal.min.js"></script>
+
+  <!-- Page-Component Scripts -->
+  <script src="~/node_modules/plyr/dist/plyr.min.js"></script>
+
+  <!-- Vidload Frontend JavaScript -->
+  <script src="~/js/configuration/apiServiceUrls.js"></script>
+  <script src="~/js/requests/downloadRequest.js"></script>
+  <script src="~/js/requests/mediaLocationRequest.js"></script>
+  <script src="~/js/requests/mediaMetadataRequest.js"></script>
+  <script src="~/js/controller/vidloadController.js"></script>
+  <script src="~/js/downloadJob.js"></script>
+  <script src="~/js/backendApiService.js"></script>
+  <script src="~/js/components/urlInputComponent.js"></script>
+  <script src="~/js/components/mediaPlaybackComponent.js"></script>
+  <script src="js/components/mediaMetadataComponent.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    const apiServiceUrls = new ApiServiceUrls(
+        '@Url.Action("InitiateDownload", "API")',
+        '@Url.Action("MediaMetadata", "API")',
+        '@Url.Action("MediaLocation", "API")',
+        '@Url.Action("Download", "API")');
+    
+    const backendApiService = new BackendApiService(apiServiceUrls);
+    
+    const urlInputComponent = new UrlInputComponent(
+        $('.js-media-input-url'),
+        $('.js-target-format-selection'),
+        $('.js-media-input-url-container'),
+        $('.js-invalid-input-parameters-modal'));
+    
+   const mediaPlaybackComponent = new MediaPlaybackComponent($('.js-media-playback-container'));
+   const mediaMetadataComponent = new MediaMetadataComponent($('.js-media-metadata-container'));
+   
+    const controller = new VidloadController(
+        backendApiService,
+        apiServiceUrls,
+        urlInputComponent,
+        mediaMetadataComponent,
+        mediaPlaybackComponent);
+    
+    controller.initialize();
+  });
+  </script>
+}
